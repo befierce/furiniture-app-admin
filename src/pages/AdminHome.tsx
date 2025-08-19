@@ -3,6 +3,7 @@ import { useRef } from "react";
 import "./AdminHome.css";
 import { db } from "../firebaseConfig"; // adjust path
 import { addDoc, collection } from "firebase/firestore";
+import Header from "../components/Header/Header";
 
 const AdminHome = () => {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -45,43 +46,46 @@ const AdminHome = () => {
   };
 
   return (
-    <div className="middle-section">
-      <div className="form-container">
-        <div className="form-container-wrapper">
-          <form onSubmit={submitDataHandler}>
-            <label>Title</label>
-            <br></br>
-            <input type="text" ref={titleRef} />
-            <br></br>
-            <label>Description</label>
-            <br></br>
-            <input type="text" ref={descriptionRef} />
-            <br></br>
-            <label>Vendor</label>
-            <br></br>
-            <input type="text" ref={vendorRef} />
-            <br></br>
-            <label>Category</label>
-            <br></br>
-            <input type="text" ref={categoryRef} />
-            <br></br>
-            <label>Price</label>
-            <br></br>
-            <input type="number" ref={priceRef} />
-            <br></br>
-            <label>Quantity</label>
-            <br></br>
-            <input type="number" ref={quantityRef} />
-            <br></br>
-            <label>Image URL</label>
-            <br></br>
-            <input type="url" ref={imageUrlRef} />
-            <br></br>
-            <button type="submit">Add to database</button>
-          </form>
+    <>
+      <Header />
+      <div className="middle-section">
+        <div className="form-container">
+          <div className="form-container-wrapper">
+            <form onSubmit={submitDataHandler}>
+              <label>Title</label>
+              <br></br>
+              <input type="text" ref={titleRef} />
+              <br></br>
+              <label>Description</label>
+              <br></br>
+              <input type="text" ref={descriptionRef} />
+              <br></br>
+              <label>Vendor</label>
+              <br></br>
+              <input type="text" ref={vendorRef} />
+              <br></br>
+              <label>Category</label>
+              <br></br>
+              <input type="text" ref={categoryRef} />
+              <br></br>
+              <label>Price</label>
+              <br></br>
+              <input type="number" ref={priceRef} />
+              <br></br>
+              <label>Quantity</label>
+              <br></br>
+              <input type="number" ref={quantityRef} />
+              <br></br>
+              <label>Image URL</label>
+              <br></br>
+              <input type="url" ref={imageUrlRef} />
+              <br></br>
+              <button type="submit">Add to database</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
