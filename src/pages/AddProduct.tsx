@@ -1,11 +1,10 @@
 import type { FormEvent } from "react";
 import { useRef } from "react";
-import "./AdminHome.css";
+import "./AddProduct.css";
 import { db } from "../firebaseConfig"; // adjust path
 import { addDoc, collection } from "firebase/firestore";
-import Header from "../components/Header/Header";
 
-const AdminHome = () => {
+const AddProduct = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const vendorRef = useRef<HTMLInputElement>(null);
@@ -47,7 +46,6 @@ const AdminHome = () => {
 
   return (
     <>
-      <Header />
       <div className="middle-section">
         <div className="form-container">
           <div className="form-container-wrapper">
@@ -89,4 +87,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default AddProduct;

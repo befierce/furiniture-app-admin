@@ -1,0 +1,89 @@
+.admin-pannel {
+  width: 100%;
+  height: 600px;
+  background-color: rgb(23, 20, 20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.pannel-menu-wrapper {
+  height: 250px;
+  width: 600px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.add-product-tab {
+  height: 140px;
+  width: 180px;
+  background-color: #ff5f56;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+.product-list-tab {
+  height: 140px;
+  width: 180px;
+  background-color: #ffbd2e;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+.orders-tab {
+  height: 140px;
+  width: 180px;
+  background-color: #27c93f;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+
+/* .add-product-tab:hover,
+.product-list-tab:hover,
+.orders-tab:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.08);
+} */
+
+.add-product-tab:hover,
+.product-list-tab:hover,
+.orders-tab:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.middle-section {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(28, 24, 24);
+  padding: 20px;
+}
+

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./AdminPannel.css";
+// import AdminHome from "./AddProduct";
+import AdminTools from "../components/AdminTools";
 
 const AdminPannel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -17,16 +19,16 @@ const AdminPannel = () => {
 
       <div className="browser-tabs">
         <div
-          className={`tab ${activeTab === "dashboard" ? "active" : ""}`}
-          onClick={() => setActiveTab("dashboard")}
+          className={`tab ${activeTab === "admin-tools" ? "active" : ""}`}
+          onClick={() => setActiveTab("admin-tools")}
         >
-          Admin Dashboard
+          Admin-Tools
         </div>
         <div
-          className={`tab ${activeTab === "users" ? "active" : ""}`}
-          onClick={() => setActiveTab("users")}
+          className={`tab ${activeTab === "orders" ? "active" : ""}`}
+          onClick={() => setActiveTab("orders")}
         >
-          Users
+          Orders
         </div>
         <div
           className={`tab ${activeTab === "settings" ? "active" : ""}`}
@@ -36,13 +38,12 @@ const AdminPannel = () => {
         </div>
       </div>
       <div className="browser-content">
-        {activeTab === "dashboard" && (
+        {activeTab === "admin-tools" && (
           <>
-            <h1>Welcome to Admin Dashboard</h1>
-            <p>Manage your application overview here.</p>
+            <AdminTools/>
           </>
         )}
-        {activeTab === "users" && (
+        {activeTab === "orders" && (
           <>
             <h1>User Management</h1>
             <p>Here you can manage users, roles, and permissions.</p>
