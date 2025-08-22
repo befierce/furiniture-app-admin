@@ -12,7 +12,7 @@ const AdminTools = () => {
           <div className="add-product-tab" onClick={addProductPageNavigator}>
             add product
           </div>
-          <div className="product-list-tab">product-list</div>
+          <div className="product-list-tab" onClick={()=>{navigate("/admin-pannel.local/invetory")}}>inventory</div>
           <div className="orders-tab">oders</div>
         </div>
       </div>
