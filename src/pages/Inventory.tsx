@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "../firebaseConfig";
 import "./Inventory.css";
+import AddProduct from "./AddProduct";
 
 interface Product {
   id: string;
@@ -8,16 +9,18 @@ interface Product {
   description: string;
   category: string;
   price: number;
+  vendor: string;
+  imageUrl: string;
   quantity: number;
 }
 
 const Inventory = () => {
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const handleDelete = async (product: Product) => {
     console.log("Deleting:", product);
     const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/products-list/${product.id}`;
-    
+
     const response = await fetch(url, { method: "DELETE" });
 
     if (response.ok) {
@@ -29,7 +32,7 @@ const Inventory = () => {
   };
 
   const handleEdit = (product: Product) => {
-    
+    setSelectedProduct(product);
   };
 
   useEffect(() => {
@@ -50,6 +53,8 @@ const Inventory = () => {
             category: fields.category?.stringValue || "",
             price: Number(fields.price?.stringValue || "0"),
             quantity: Number(fields.quantity?.stringValue || "0"),
+            imageUrl: fields.imageUrl?.stringValue || "",
+            vendor: fields.vendor?.stringValue || ""
           };
         });
 
@@ -62,33 +67,41 @@ const Inventory = () => {
   }, []);
 
   return (
-    <div className="inventory-container">
-      <h2 className="header">Products List</h2>
-      <div className="product-list-wrapper-outer">
-        {products.map((product) => (
-          <div className="product-list-item" key={product.id}>
-            <div className="product-info">
-              <h3>{product.title}</h3>
-              <p className="desc">{product.description}</p>
-              <p>
-                ₹{product.price} | Qty: {product.quantity}
-              </p>
-            </div>
-            <div className="product-actions">
-              <button className="edit-btn" onClick={() => handleEdit(product)}>
-                Edit
-              </button>
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(product)}
-              >
-                Delete
-              </button>
-            </div>
+    <>
+      {selectedProduct && <AddProduct product={selectedProduct} />}
+      {!selectedProduct && (
+        <div className="inventory-container">
+          <h2 className="header">Products List</h2>
+          <div className="product-list-wrapper-outer">
+            {products.map((product) => (
+              <div className="product-list-item" key={product.id}>
+                <div className="product-info">
+                  <h3>{product.title}</h3>
+                  <p className="desc">{product.description}</p>
+                  <p>
+                    ₹{product.price} | Qty: {product.quantity}
+                  </p>
+                </div>
+                <div className="product-actions">
+                  <button
+                    className="edit-btn"
+                    onClick={() => handleEdit(product)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(product)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 
