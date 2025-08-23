@@ -1,27 +1,10 @@
 import type { FormEvent } from "react";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import "./AddProduct.css";
 import { db } from "../firebaseConfig";
-import { firebaseConfig } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 
-interface Product {
-  id?: string;
-  title: string;
-  description: string;
-  vendor: string;
-  category: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-}
-
-interface Props {
-  product?: Product;
-}
-
-const AddProduct = ({ product }: Props) => {
+const AddProduct = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const vendorRef = useRef<HTMLInputElement>(null);
@@ -29,24 +12,6 @@ const AddProduct = ({ product }: Props) => {
   const priceRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
   const imageUrlRef = useRef<HTMLInputElement>(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (product) {
-      setIsEditing(true);
-      console.log(product);
-      if (titleRef.current) titleRef.current.value = product.title;
-      if (descriptionRef.current)
-        descriptionRef.current.value = product.description;
-      if (vendorRef.current) vendorRef.current.value = product.vendor;
-      if (categoryRef.current) categoryRef.current.value = product.category;
-      if (priceRef.current) priceRef.current.value = product.price.toString();
-      if (quantityRef.current)
-        quantityRef.current.value = product.quantity.toString();
-      if (imageUrlRef.current) imageUrlRef.current.value = product.imageUrl;
-    }
-  }, [product]);
-
   const clearInputs = () => {
     if (titleRef.current) titleRef.current.value = "";
     if (descriptionRef.current) descriptionRef.current.value = "";
@@ -55,53 +20,6 @@ const AddProduct = ({ product }: Props) => {
     if (priceRef.current) priceRef.current.value = "";
     if (quantityRef.current) quantityRef.current.value = "";
     if (imageUrlRef.current) imageUrlRef.current.value = "";
-  };
-
-  const editDataHandler = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (!product || !product.id) {
-      console.error("No product ID found for update");
-      return;
-    }
-
-    console.log("editDataHandler");
-    const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/products-list/${product.id}`;
-
-    const updatedData = {
-      fields: {
-        title: { stringValue: titleRef.current?.value || "" },
-        description: { stringValue: descriptionRef.current?.value || "" },
-        vendor: { stringValue: vendorRef.current?.value || "" },
-        category: { stringValue: categoryRef.current?.value || "" },
-        price: { integerValue: parseInt(priceRef.current?.value || "0") },
-        quantity: { integerValue: parseInt(quantityRef.current?.value || "0") },
-        imageUrl: { stringValue: imageUrlRef.current?.value || "" },
-      },
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${await response.json()}`);
-      }
-
-      const data = await response.json();
-      console.log("Update successful:", data);
-      alert("Product updated successfully!");
-      setIsEditing(false);
-      clearInputs();
-      navigate("/admin-pannel.local/invetory");
-    } catch (error) {
-      console.error("Error updating document:", error.message);
-    }
   };
 
   const submitDataHandler = async (e: FormEvent) => {
@@ -130,7 +48,7 @@ const AddProduct = ({ product }: Props) => {
       <div className="middle-section">
         <div className="form-container">
           <div className="form-container-wrapper">
-            <form onSubmit={isEditing ? editDataHandler : submitDataHandler}>
+            <form onSubmit={submitDataHandler}>
               <label>Title</label>
               <br />
               <input type="text" ref={titleRef} required />
@@ -160,7 +78,7 @@ const AddProduct = ({ product }: Props) => {
               <input type="url" ref={imageUrlRef} required />
               <br />
               <button type="submit">
-                {isEditing ? "Update Product" : "Add to Database"}
+                "Add to Database"
               </button>
             </form>
           </div>
