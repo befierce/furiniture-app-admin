@@ -1,9 +1,13 @@
 import type { FormEvent } from "react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
-import { db } from "../firebaseConfig"; // adjust path
+import { db } from "../firebaseConfig";
+import { firebaseConfig } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+
 interface Product {
+  id?: string;
   title: string;
   description: string;
   vendor: string;
@@ -12,7 +16,12 @@ interface Product {
   quantity: number;
   imageUrl: string;
 }
-const AddProduct = ({ product }: props) => {
+
+interface Props {
+  product?: Product;
+}
+
+const AddProduct = ({ product }: Props) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const vendorRef = useRef<HTMLInputElement>(null);
@@ -21,7 +30,7 @@ const AddProduct = ({ product }: props) => {
   const quantityRef = useRef<HTMLInputElement>(null);
   const imageUrlRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (product) {
       setIsEditing(true);
@@ -37,6 +46,7 @@ const AddProduct = ({ product }: props) => {
       if (imageUrlRef.current) imageUrlRef.current.value = product.imageUrl;
     }
   }, [product]);
+
   const clearInputs = () => {
     if (titleRef.current) titleRef.current.value = "";
     if (descriptionRef.current) descriptionRef.current.value = "";
@@ -46,10 +56,54 @@ const AddProduct = ({ product }: props) => {
     if (quantityRef.current) quantityRef.current.value = "";
     if (imageUrlRef.current) imageUrlRef.current.value = "";
   };
-  const editDataHandler = (e: FormEvent) => {
+
+  const editDataHandler = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (!product || !product.id) {
+      console.error("No product ID found for update");
+      return;
+    }
+
     console.log("editDataHandler");
+    const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/products-list/${product.id}`;
+
+    const updatedData = {
+      fields: {
+        title: { stringValue: titleRef.current?.value || "" },
+        description: { stringValue: descriptionRef.current?.value || "" },
+        vendor: { stringValue: vendorRef.current?.value || "" },
+        category: { stringValue: categoryRef.current?.value || "" },
+        price: { integerValue: parseInt(priceRef.current?.value || "0") },
+        quantity: { integerValue: parseInt(quantityRef.current?.value || "0") },
+        imageUrl: { stringValue: imageUrlRef.current?.value || "" },
+      },
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${await response.json()}`);
+      }
+
+      const data = await response.json();
+      console.log("Update successful:", data);
+      alert("Product updated successfully!");
+      setIsEditing(false);
+      clearInputs();
+      navigate("/admin-pannel.local/invetory");
+    } catch (error) {
+      console.error("Error updating document:", error.message);
+    }
   };
+
   const submitDataHandler = async (e: FormEvent) => {
     e.preventDefault();
     const data = {
@@ -63,8 +117,8 @@ const AddProduct = ({ product }: props) => {
     };
     try {
       const docRef = await addDoc(collection(db, "products-list"), data);
-      console.log("Document written with ID: ", docRef);
-      alert("data added");
+      console.log("Document written with ID: ", docRef.id);
+      alert("Data added successfully!");
       clearInputs();
     } catch (error) {
       console.log(error);
@@ -78,34 +132,34 @@ const AddProduct = ({ product }: props) => {
           <div className="form-container-wrapper">
             <form onSubmit={isEditing ? editDataHandler : submitDataHandler}>
               <label>Title</label>
-              <br></br>
-              <input type="text" ref={titleRef} />
-              <br></br>
+              <br />
+              <input type="text" ref={titleRef} required />
+              <br />
               <label>Description</label>
-              <br></br>
-              <input type="text" ref={descriptionRef} />
-              <br></br>
+              <br />
+              <input type="text" ref={descriptionRef} required />
+              <br />
               <label>Vendor</label>
-              <br></br>
-              <input type="text" ref={vendorRef} />
-              <br></br>
+              <br />
+              <input type="text" ref={vendorRef} required />
+              <br />
               <label>Category</label>
-              <br></br>
-              <input type="text" ref={categoryRef} />
-              <br></br>
+              <br />
+              <input type="text" ref={categoryRef} required />
+              <br />
               <label>Price</label>
-              <br></br>
-              <input type="number" ref={priceRef} />
-              <br></br>
+              <br />
+              <input type="number" ref={priceRef} required min="0" />
+              <br />
               <label>Quantity</label>
-              <br></br>
-              <input type="number" ref={quantityRef} />
-              <br></br>
+              <br />
+              <input type="number" ref={quantityRef} required min="0" />
+              <br />
               <label>Image URL</label>
-              <br></br>
-              <input type="url" ref={imageUrlRef} />
-              <br></br>
-              <button>
+              <br />
+              <input type="url" ref={imageUrlRef} required />
+              <br />
+              <button type="submit">
                 {isEditing ? "Update Product" : "Add to Database"}
               </button>
             </form>

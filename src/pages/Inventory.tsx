@@ -51,10 +51,16 @@ const Inventory = () => {
             title: fields.title?.stringValue || "",
             description: fields.description?.stringValue || "",
             category: fields.category?.stringValue || "",
-            price: Number(fields.price?.stringValue || "0"),
-            quantity: Number(fields.quantity?.stringValue || "0"),
+            price: Number(
+              fields.price?.integerValue || fields.price?.stringValue || "0"
+            ),
+            quantity: Number(
+              fields.quantity?.integerValue ||
+                fields.quantity?.stringValue ||
+                "0"
+            ),
             imageUrl: fields.imageUrl?.stringValue || "",
-            vendor: fields.vendor?.stringValue || ""
+            vendor: fields.vendor?.stringValue || "",
           };
         });
 
