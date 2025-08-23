@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const AdminTools = () => {
   const navigate = useNavigate();
   const addProductPageNavigator = () => {
-    navigate("/admin-pannel.local/add-product")
+    navigate("/admin-pannel.local/add-product");
   };
   return (
     <>
@@ -12,8 +12,22 @@ const AdminTools = () => {
           <div className="add-product-tab" onClick={addProductPageNavigator}>
             add product
           </div>
-          <div className="product-list-tab" onClick={()=>{navigate("/admin-pannel.local/invetory")}}>inventory</div>
-          <div className="orders-tab">oders</div>
+          <div
+            className="product-list-tab"
+            onClick={() => {
+              navigate("/admin-pannel.local/invetory");
+            }}
+          >
+            inventory
+          </div>
+          <div
+            className="orders-tab"
+            onClick={() => {
+              navigate("/admin-pannel.local/orders");
+            }}
+          >
+            oders
+          </div>
         </div>
       </div>
     </>
