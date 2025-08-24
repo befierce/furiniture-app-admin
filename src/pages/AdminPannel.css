@@ -42,6 +42,7 @@
 }
 .browser-tabs {
   display: flex;
+  flex-direction: column;
   background: #a60000;
 }
 .tab {

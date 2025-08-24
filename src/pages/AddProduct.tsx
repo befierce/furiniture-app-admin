@@ -1,10 +1,14 @@
 import type { FormEvent } from "react";
+import "./AdminPannel.css";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
 import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 
 const AddProduct = () => {
+  const  navigate = useNavigate();
+  // const [activeTab, setActiveTab] = useState("admin-tools");
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const vendorRef = useRef<HTMLInputElement>(null);
@@ -45,7 +49,27 @@ const AddProduct = () => {
 
   return (
     <>
-      <div className="middle-section">
+    <div className="browser-wrapper">
+      <div className="browser-topbar">
+        <div className="browser-buttons">
+          <span className="btn red"></span>
+          <span className="btn yellow"></span>
+          <span className="btn green"></span>
+        </div>
+        <div className="browser-url">https://admin-panel.local</div>
+      </div>
+
+      <div className="browser-tabs">
+        <div
+          className={`tab "admin-tools"`}
+          onClick={() => {
+            // setActiveTab("admin-tools");
+            navigate("/");
+          }}
+        >
+          Admin-Tools
+        </div>
+         <div className="middle-section">
         <div className="form-container">
           <div className="form-container-wrapper">
             <form onSubmit={submitDataHandler}>
@@ -84,6 +108,9 @@ const AddProduct = () => {
           </div>
         </div>
       </div>
+      </div>
+    </div>
+     
     </>
   );
 };

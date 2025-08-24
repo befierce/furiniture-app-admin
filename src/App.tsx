@@ -14,17 +14,17 @@ function App() {
         <Routes>
           <Route path="/signup" element={<AdminSignup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin-pannel.local" element={<AdminPannel />} />
+          <Route path="/" element={<AdminPannel />} />
           <Route
-            path="/admin-pannel.local/add-product"
+            path="/add-product"
             element={<AddProduct />}
           />
           <Route
-            path="/admin-pannel.local/edit-product"
+            path="/edit-product"
             element={<EditProduct />}
           />
-          <Route path="/admin-pannel.local/invetory" element={<Inventory />} />
-          <Route path="/admin-pannel.local/orders" element={<Orders />} />
+          <Route path="/invetory" element={<Inventory />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </Router>
     </>

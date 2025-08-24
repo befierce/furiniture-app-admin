@@ -24,37 +24,7 @@ const AdminPannel = () => {
         >
           Admin-Tools
         </div>
-        <div
-          className={`tab ${activeTab === "orders" ? "active" : ""}`}
-          onClick={() => setActiveTab("orders")}
-        >
-          Orders
-        </div>
-        <div
-          className={`tab ${activeTab === "settings" ? "active" : ""}`}
-          onClick={() => setActiveTab("settings")}
-        >
-          Settings
-        </div>
-      </div>
-      <div className="browser-content">
-        {activeTab === "admin-tools" && (
-          <>
-            <AdminTools/>
-          </>
-        )}
-        {activeTab === "orders" && (
-          <>
-            <h1>User Management</h1>
-            <p>Here you can manage users, roles, and permissions.</p>
-          </>
-        )}
-        {activeTab === "settings" && (
-          <>
-            <h1>Settings</h1>
-            <p>Configure your application settings here.</p>
-          </>
-        )}
+        <AdminTools />
       </div>
     </div>
   );

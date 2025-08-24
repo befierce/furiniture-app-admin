@@ -20,11 +20,13 @@ const EditProduct = () => {
   useEffect(() => {
     if (product) {
       if (titleRef.current) titleRef.current.value = product.title;
-      if (descriptionRef.current) descriptionRef.current.value = product.description;
+      if (descriptionRef.current)
+        descriptionRef.current.value = product.description;
       if (vendorRef.current) vendorRef.current.value = product.vendor;
       if (categoryRef.current) categoryRef.current.value = product.category;
       if (priceRef.current) priceRef.current.value = product.price.toString();
-      if (quantityRef.current) quantityRef.current.value = product.quantity.toString();
+      if (quantityRef.current)
+        quantityRef.current.value = product.quantity.toString();
       if (imageUrlRef.current) imageUrlRef.current.value = product.imageUrl;
     }
   }, [product]);
@@ -78,50 +80,69 @@ const EditProduct = () => {
       console.log("Update successful:", data);
       alert("Product updated successfully!");
       clearInputs();
-      navigate("/admin-pannel.local/invetory");
+      navigate("/invetory");
     } catch (error) {
       console.error("Error updating document:", error);
     }
   };
 
   return (
-    <div className="middle-section">
-      <div className="form-container">
-        <div className="form-container-wrapper">
-          <form onSubmit={editDataHandler}>
-            <label>Title</label>
-            <br />
-            <input type="text" ref={titleRef} required />
-            <br />
-            <label>Description</label>
-            <br />
-            <input type="text" ref={descriptionRef} required />
-            <br />
-            <label>Vendor</label>
-            <br />
-            <input type="text" ref={vendorRef} required />
-            <br />
-            <label>Category</label>
-            <br />
-            <input type="text" ref={categoryRef} required />
-            <br />
-            <label>Price</label>
-            <br />
-            <input type="number" ref={priceRef} required min="0" />
-            <br />
-            <label>Quantity</label>
-            <br />
-            <input type="number" ref={quantityRef} required min="0" />
-            <br />
-            <label>Image URL</label>
-            <br />
-            <input type="url" ref={imageUrlRef} required />
-            <br />
-            <button type="submit">Update Product</button>
-          </form>
+    <>
+      <div className="browser-wrapper">
+        <div className="browser-topbar">
+          <div className="browser-buttons">
+            <span className="btn red"></span>
+            <span className="btn yellow"></span>
+            <span className="btn green"></span>
+          </div>
+          <div className="browser-url">https://admin-panel.local</div>
+        </div>
+
+        <div className="browser-tabs">
+          <div className={`tab admin`} onClick={() => navigate("/")}>
+            Admin-Tools
+          </div>
+          {/* <AdminTools /> */}
+        </div>
+        <div className="middle-section">
+          <div className="form-container">
+            <div className="form-container-wrapper">
+              <form onSubmit={editDataHandler}>
+                <label>Title</label>
+                <br />
+                <input type="text" ref={titleRef} required />
+                <br />
+                <label>Description</label>
+                <br />
+                <input type="text" ref={descriptionRef} required />
+                <br />
+                <label>Vendor</label>
+                <br />
+                <input type="text" ref={vendorRef} required />
+                <br />
+                <label>Category</label>
+                <br />
+                <input type="text" ref={categoryRef} required />
+                <br />
+                <label>Price</label>
+                <br />
+                <input type="number" ref={priceRef} required min="0" />
+                <br />
+                <label>Quantity</label>
+                <br />
+                <input type="number" ref={quantityRef} required min="0" />
+                <br />
+                <label>Image URL</label>
+                <br />
+                <input type="url" ref={imageUrlRef} required />
+                <br />
+                <button type="submit">Update Product</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

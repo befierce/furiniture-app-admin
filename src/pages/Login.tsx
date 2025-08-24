@@ -54,7 +54,7 @@ const Login = () => {
         );
       }
       alert("admin Login success");
-      navigate("/admin-pannel.local")
+      navigate("/")
     } catch (err) {
       console.log(err);
       alert(err);

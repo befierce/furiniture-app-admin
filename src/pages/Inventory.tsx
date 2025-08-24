@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import "./AdminPannel.css";
 import "./Inventory.css";
 
 interface Product {
@@ -33,7 +34,7 @@ const Inventory = () => {
   };
 
   const handleEdit = (product: Product) => {
-    navigate("/admin-pannel.local/edit-product", { state: { product } });
+    navigate("/edit-product", { state: { product } });
   };
 
   useEffect(() => {
@@ -75,35 +76,53 @@ const Inventory = () => {
 
   return (
     <>
-      {/* {selectedProduct && <AddProduct product={selectedProduct} />} */}
-      <div className="inventory-container">
-        <h2 className="header">Products List</h2>
-        <div className="product-list-wrapper-outer">
-          {products.map((product) => (
-            <div className="product-list-item" key={product.id}>
-              <div className="product-info">
-                <h3>{product.title}</h3>
-                <p className="desc">{product.description}</p>
-                <p>
-                  ₹{product.price} | Qty: {product.quantity}
-                </p>
-              </div>
-              <div className="product-actions">
-                <button
-                  className="edit-btn"
-                  onClick={() => handleEdit(product)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(product)}
-                >
-                  Delete
-                </button>
-              </div>
+      <div className="browser-wrapper">
+        <div className="browser-topbar">
+          <div className="browser-buttons">
+            <span className="btn red"></span>
+            <span className="btn yellow"></span>
+            <span className="btn green"></span>
+          </div>
+          <div className="browser-url">https://admin-panel.local</div>
+        </div>
+
+        <div className="browser-tabs">
+          <div
+            className={`tab "admin-tools`}
+            onClick={() => navigate("/")}
+          >
+            Admin-Tools
+          </div>
+          <div className="inventory-container">
+            <h2 className="header">Products List</h2>
+            <div className="product-list-wrapper-outer">
+              {products.map((product) => (
+                <div className="product-list-item" key={product.id}>
+                  <div className="product-info">
+                    <h3>{product.title}</h3>
+                    <p className="desc">{product.description}</p>
+                    <p>
+                      ₹{product.price} | Qty: {product.quantity}
+                    </p>
+                  </div>
+                  <div className="product-actions">
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEdit(product)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(product)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </>
