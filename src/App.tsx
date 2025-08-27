@@ -11,16 +11,19 @@ import Login from "./pages/Login";
 import EditProduct from "./pages/EditProduct";
 import Inventory from "./pages/Inventory";
 import Orders from "./pages/Orders";
+import { useSelector } from "react-redux";
 import "./App.css";
 function App() {
   function ProtectedRoutes({ children }: { children: React.ReactNode }) {
-    const idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-      alert("please login first");
-      return <Navigate to="/login" replace />;
-    }
-    return children;
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+
+  if (!isLoggedIn) {
+    alert("please login first");
+    return <Navigate to="/login" replace />;
   }
+
+  return children;
+}
 
   return (
     <>

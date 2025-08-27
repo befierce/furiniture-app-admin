@@ -1,10 +1,27 @@
 import { useState } from "react";
 import "./AdminPannel.css";
-// import AdminHome from "./AddProduct";
 import AdminTools from "../components/AdminTools";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/authSlice";
+// import { } from "../store/store";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const AdminPannel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+
+  const logoutHandler = () => {
+    console.log("logout button clicked");
+    dispatch(logout());
+    localStorage.clear();
+    navigate("/login"); // ✅ force redirect
+  };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="browser-wrapper">
@@ -19,10 +36,13 @@ const AdminPannel = () => {
 
       <div className="browser-tabs">
         <div
-          className={`tab ${activeTab === "admin-tools" ? "active" : ""}`}
+          className={`tab admin-tools`}
           onClick={() => setActiveTab("admin-tools")}
         >
           Admin-Tools
+          <button className="logout-button-admin" onClick={logoutHandler}>
+            Logout
+          </button>
         </div>
         <AdminTools />
       </div>

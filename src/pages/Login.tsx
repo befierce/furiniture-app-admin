@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseConfig } from "../firebaseConfig";
 import "./AdminSignup.css";
-
+import { useDispatch } from "react-redux";
+import { setLogin } from "../store/authSlice";
 const API_KEY = firebaseConfig.apiKey;
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -47,9 +49,10 @@ const Login = () => {
       }
 
       console.log("Login Success:", data);
-      localStorage.setItem("idToken", data.idToken); 
+      localStorage.setItem("idToken", data.idToken);
 
       alert("Admin Login Success");
+      dispatch(setLogin());
       navigate("/");
     } catch (err) {
       console.error("Login Error:", err);

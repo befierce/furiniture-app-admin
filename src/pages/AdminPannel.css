@@ -50,10 +50,12 @@
   cursor: pointer;
   background: #b22222;
   border-right: 1px solid #880000;
+  color: white;
 }
 .tab.active {
   background: #ff4c4c;
   font-weight: bold;
+
 }
 
 .browser-content {
@@ -61,4 +63,17 @@
   padding: 20px;
   background: #b30000;
   overflow-y: auto;
+}
+
+.logout-button-admin{
+  background-color: red;
+  margin-left: 77%;
+  color: aliceblue;
+  height: 25px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.logout-button-admin :hover{
+  background-color: rgba(255, 0, 0, 0.47);
+  cursor: pointer;
 }
