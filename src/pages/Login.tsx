@@ -4,7 +4,7 @@ import { firebaseConfig } from "../firebaseConfig";
 import "./AdminSignup.css";
 
 const API_KEY = firebaseConfig.apiKey;
-// const projectId = firebaseConfig.projectId;
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -22,42 +22,38 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const email = formData.email;
-    const password = formData.password;
-    if (!formData.email || !formData.password) {
+
+    const { email, password } = formData;
+    if (!email || !password) {
       setError("All fields are required.");
       return;
     }
+
     try {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password, returnSecureToken: true }),
         }
       );
-      const data = await res.json();
-      const idToken = data.idToken;
 
-      if (data && data.localId) {
-        await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${idToken}`,
-            },
-            body: JSON.stringify({ email, password, returnSecureToken: true }),
-          }
-        );
+      const data = await res.json();
+
+      if (data.error) {
+        setError(data.error.message);
+        return;
       }
-      alert("admin Login success");
-      navigate("/")
+
+      console.log("Login Success:", data);
+      localStorage.setItem("idToken", data.idToken); 
+
+      alert("Admin Login Success");
+      navigate("/");
     } catch (err) {
-      console.log(err);
-      alert(err);
+      console.error("Login Error:", err);
+      setError("Something went wrong. Try again!");
     }
   };
 

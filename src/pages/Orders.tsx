@@ -51,7 +51,7 @@ const Orders = () => {
                   category: f.category?.stringValue || "",
                   vendor: f.vendor?.stringValue || "",
                   title: f.title?.stringValue || "",
-                  price: parseInt(f.price?.integerValue || ""),
+                  price: parseInt(f.price?.integerValue || f.price?.stringValue || ""),
                   quantity: parseInt(f.quantity?.integerValue || ""),
                   quantityInCart: parseInt(
                     f.quantityInCart?.integerValue || "0"
