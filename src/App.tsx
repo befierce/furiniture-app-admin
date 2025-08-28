@@ -16,8 +16,8 @@ import "./App.css";
 function App() {
   function ProtectedRoutes({ children }: { children: React.ReactNode }) {
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
-
-  if (!isLoggedIn) {
+  const token = localStorage.getItem("idToken")
+  if (!isLoggedIn && !token) {
     alert("please login first");
     return <Navigate to="/login" replace />;
   }
