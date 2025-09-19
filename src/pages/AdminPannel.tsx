@@ -7,7 +7,7 @@ import { logout } from "../store/authSlice";
 import { useNavigate, Navigate } from "react-router-dom";
 
 const AdminPannel = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [ setActiveTab] = useState("dashboard");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
@@ -16,7 +16,7 @@ const AdminPannel = () => {
     console.log("logout button clicked");
     dispatch(logout());
     localStorage.clear();
-    navigate("/login"); // ✅ force redirect
+    navigate("/login"); 
   };
 
   if (!isLoggedIn) {
