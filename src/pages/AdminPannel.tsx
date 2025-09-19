@@ -10,8 +10,7 @@ const AdminPannel = () => {
   // const [ setActiveTab] = useState("dashboard");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn) || localStorage.getItem("idToken");
   const logoutHandler = () => {
     console.log("logout button clicked");
     dispatch(logout());
