@@ -7,7 +7,7 @@ import { logout } from "../store/authSlice";
 import { useNavigate, Navigate } from "react-router-dom";
 
 const AdminPannel = () => {
-  const [ setActiveTab] = useState("dashboard");
+  // const [ setActiveTab] = useState("dashboard");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
@@ -37,7 +37,7 @@ const AdminPannel = () => {
       <div className="browser-tabs">
         <div
           className={`tab admin-tools`}
-          onClick={() => setActiveTab("admin-tools")}
+          // onClick={() => setActiveTab("admin-tools")}
         >
           Admin-Tools
           <button className="logout-button-admin" onClick={logoutHandler}>
